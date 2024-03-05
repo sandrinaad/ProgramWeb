@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;}
+
+.ktp {
+    width: 700px; 
+    margin: 50px auto;
+    background-color: #add8e6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ktp-title {
+    text-align: center;
+    margin: 0;
+    padding: 2px;
+}
+
+.ktp-photo {
+    width: 150px;
+    height: 180px;
+    margin: 20px;
+    border-radius: 10px;
+    float: right;}
+
+.ktp-info {
+    padding: 20px;
+    font-weight: bold;
+    padding-top:8px;
+    font-size: 11pt;
+}
+
+.ktp-info-item {
+    margin-bottom: 5px; /* Perpendek jarak antara paragraf */
+}
+
+.ktp-info-label {
+    font-weight: bold;
+}
+
+
+.ktp-info-item span {
+    display: inline-block;
+    width: 150px; 
+    
+}
+
+.NIK {
+    line-height:2;
+    font-family: OCR A;
+    margin: 0;
+    padding: 0;
+    font-size : 17pt;
+    background-color: #add8e6;
+    margin-left: auto; 
+}
