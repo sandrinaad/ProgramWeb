@@ -23,7 +23,7 @@
         if (empty($_POST["email"])) {
             $emailErr = "<span style='color: red;'>Email harus diisi</span><br>";
         } else {
-            $email = $_POST['email'];
+            $email = $_POST["email"];
             $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 echo "Email berhasil disimpan<br>";
@@ -49,7 +49,7 @@
     ?>
     <?php
     //memeriksa apakah input adalah email yang valid
-    $email = $_POST['email'];
+    $email = $_POST["email"];
     if(filter_var($email, FILTER_VALIDATE_EMAIL)){
         //Lanjutkan dengan pengolahan email yang aman
         echo "Email berhasil disimpan<br>";
