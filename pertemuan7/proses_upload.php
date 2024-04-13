@@ -10,7 +10,7 @@ if(!file_exists($targetDirectory)){
 if ($_FILES['files']['name'][0]){
     $totalFiles = count($_FILES['files']['name']);
 
-    //loop melalui semua file yang dounggah
+    //loop melalui semua file yang diunggah
     for($i = 0; $i < $totalFiles; $i++){
         $fileName = $_FILES['files']['name'][$i];
         $targetFile = $targetDirectory . $fileName;
