@@ -1,39 +1,20 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #b7cbf7;
     margin: 0;
     padding: 0;
+    color: #333;
 }
-
-.container {
-    max-width: 600px;
-    margin: 50px auto;
-    background-color: #b7cbf7;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 h2 {
     text-align: center;
-    color: #000000;
+    color: #007bff;
 }
-
-.form-group {
-    margin-bottom: 20px;
-}
-
 label {
-    display: block;
-    margin-bottom: 5px;
     font-weight: bold;
 }
-
 input[type="text"],
-input[type="email"],
-input[type="password"],
 input[type="file"],
-button[type="submit"] {
+select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -41,17 +22,51 @@ button[type="submit"] {
     box-sizing: border-box;
     margin-top: 5px;
 }
-
-input[type="file"] {
-    border: none;
-}
-
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
-
 button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* Tampilan setelah pengiriman inputan */
+.result-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+table#team-table {
+    display: none;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table#team-table th, table#team-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+table#team-table th {
+    background-color: #f2f2f2;
+}
+table#team-table tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
