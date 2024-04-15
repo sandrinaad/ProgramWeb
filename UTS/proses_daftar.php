@@ -1,42 +1,90 @@
 <?php
+session_start();
+
+// Mengecek apakah ada request method POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if all required fields are filled
-    if(isset($_POST['kota']) && isset($_POST['nohp']) && isset($_POST['nama1']) && isset($_POST['nama2']) && isset($_POST['nama3']) && isset($_POST['nama4']) && isset($_FILES['file'])) {
-        // Collect form data
-        $kota = $_POST['kota'];
-        $nohp = $_POST['nohp'];
-        $kategori = $_POST['var4'];
-        $nama1 = $_POST['nama1'];
-        $nama2 = $_POST['nama2'];
-        $nama3 = $_POST['nama3'];
-        $nama4 = $_POST['nama4'];
-        
-        // Process the uploaded file
-        $targetDir = "uploads/";
-        $fileName = basename($_FILES["file"]["name"]);
-        $targetFilePath = $targetDir . $fileName;
-        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+    // Mengambil nilai dari formulir
+    $kota = $_POST['kota'];
+    $nohp = $_POST['nohp'];
+    $kategori = $_POST['kategori'];
+    $nama1 = $_POST['nama1'];
+    $nama2 = $_POST['nama2'];
+    $nama3 = $_POST['nama3'];
+    $nama4 = $_POST['nama4'];
 
-        // Valid extensions
-        $extensions_arr = array("pdf", "doc", "docx", "txt");
+    // Menyimpan nilai ke dalam session
+    $_SESSION['kota'] = $kota;
+    $_SESSION['nohp'] = $nohp;
+    $_SESSION['kategori'] = $kategori;
+    $_SESSION['nama1'] = $nama1;
+    $_SESSION['nama2'] = $nama2;
+    $_SESSION['nama3'] = $nama3;
+    $_SESSION['nama4'] = $nama4;
 
-        // Check extension
-        if (in_array($fileType, $extensions_arr)) {
-            // Upload file
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
-                // File uploaded successfully, perform further actions here
-                echo "Pendaftaran berhasil! Berkas berhasil diunggah.";
-            } else {
-                echo "Maaf, terjadi kesalahan saat mengunggah berkas.";
-            }
-        } else {
-            echo "Maaf, hanya file PDF, DOC, DOCX, atau TXT yang diizinkan untuk diunggah.";
+    // Mengecek apakah ada berkas yang diunggah
+    if (isset($_FILES['file'])) {
+        $errors = array();
+        $file_name = $_FILES['file']['name'];
+        $file_size = $_FILES['file']['size']; 
+        $file_tmp = $_FILES['file']['tmp_name'];
+        $file_type = $_FILES['file']['type'];
+        $file_ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+
+        // Menambahkan timestamp ke nama file
+        $file_name = time() . '.' . $file_ext;
+
+        // Menyimpan nama file ke dalam session
+        $_SESSION['file_name'] = $file_name;
+
+        $extensions = array("pdf");
+
+        if (in_array($file_ext, $extensions) === false) {
+            $errors[] = "Ekstensi file yang diizinkan adalah hanya PDF.";
         }
 
-        // You can perform database insertion or other actions with the collected form data here
-    } else {
-        echo "Mohon lengkapi semua field!";
+        if ($file_size > 2097152) {
+            $errors[] = 'Ukuran file tidak boleh lebih dari 2 MB';
+        }
+
+        if (empty($errors) == true) {
+            // Memindahkan berkas yang diunggah ke direktori tujuan
+            move_uploaded_file($file_tmp, 'uploads/' . $file_name); 
+            echo "data berhasil disimpan";
+            echo "<br>";
+            echo "Kota  : ".$_SESSION['kota'];
+            echo "<br>";
+            echo "No HP Manajer :".$_SESSION['nohp'];
+            echo "<br>";
+
+            echo "Kategori :".$_SESSION['kategori'];
+            echo "<br>";
+
+            echo "Nama Anggota 1:".$_SESSION['nama1'];
+            echo "<br>";
+
+            echo "Nama Anggota 2:".$_SESSION['nama2'];
+ 
+            echo "<br>";
+ 
+            echo "Nama Anggota 3:".$_SESSION['nama3'];
+
+            echo "<br>";
+            echo "Nama Anggota 4:".$_SESSION['nama4'];
+            echo "<br>";
+
+            echo "File berhasil diunggah.";
+        } else {
+            echo implode("", $errors);
+        }
     }
 }
-?>
 
+// Menyimpan nilai ke dalam cookie
+setcookie("kota", $kota, time() + (86400 * 30), "/"); // Cookie berlaku selama 30 hari
+setcookie("nohp", $nohp, time() + (86400 * 30), "/");
+setcookie("kategori", $kategori, time() + (86400 * 30), "/");
+setcookie("nama1", $nama1, time() + (86400 * 30), "/");
+setcookie("nama2", $nama2, time() + (86400 * 30), "/");
+setcookie("nama3", $nama3, time() + (86400 * 30), "/");
+setcookie("nama4", $nama4, time() + (86400 * 30), "/");
+?>

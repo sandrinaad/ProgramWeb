@@ -7,50 +7,90 @@
 <body>
     <div class="container">
         <h2>Polinema Bridge Cup</h2>
-        <form id="registrationForm" method="post" action="proses_daftar.php">
-    <div class="form-group">
-      <label for="kota">Kota :</label>
-      <input type="text" id="kota" name="kota" required>
-    </div>
-    <div class="form-group">
-      <label for="nohp">No HP Manager :</label>
-      <input type="text" id="nohp" name="nohp" required>
-    </div>
-    <div class="form-group">
-      <label for="email">Kategori : </label>
-      <input type="radio" name="var4" value="r1">Beregu Putra<br>
-      <input type="radio" name="var4" value="r1">Beregu Putri <br>
-      <input type="radio" name="var4" value="r1">Beregu Campuran<br><br>
-    </div>
-    <div class="form-group">
-      <label for="nama1">Nama Anggota 1 :</label>
-      <input type="text" id="nama1" name="nama1" required>
-    </div>
-    <div class="form-group">
-      <label for="nama2">Nama Anggota 2 :</label>
-      <input type="text" id="nama2" name="nama2" required>
-    </div>
-    <div class="form-group">
-      <label for="nama3">Nama Anggota 3 :</label>
-      <input type="text" id="nama3" name="nama3" required>
-    </div>
-    <div class="form-group">
-      <label for="nama4">Nama Anggota 4 :</label>
-      <input type="text" id="nama4" name="nama4" required>
-    </div>
-    <div class="form-group">
-        <label for="berkas">Berkas Anggota :</label>
-        <form id="upload-form" action="upload_ajax.php" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="file">
+        <form id="registrationForm" enctype="multipart/form-data" method="post" action="proses_daftar.php">
+            <div class="form-group">
+                <label for="kota">Kota :</label>
+                <input type="text" id="kota" name="kota" >
+            </div>
+            <div class="form-group">
+                <label for="nohp">No HP Manager :</label>
+                <input type="text" id="nohp" name="nohp" >
+            </div>
+            <div class="form-group">
+                <label for="kategori">Kategori : </label>
+                <select name="kategori" id="kategori">
+                    <option value="Beregu Putra">Beregu Putra</option>
+                    <option value="Beregu Putri">Beregu Putri</option>
+                    <option value="Beregu Campuran">Beregu Campuran</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nama1">Nama Anggota 1 :</label>
+                <input type="text" id="nama1" name="nama1" >
+            </div>
+            <div class="form-group">
+                <label for="nama2">Nama Anggota 2 :</label>
+                <input type="text" id="nama2" name="nama2" >
+            </div>
+            <div class="form-group">
+                <label for="nama3">Nama Anggota 3 :</label>
+                <input type="text" id="nama3" name="nama3" >
+            </div>
+            <div class="form-group">
+                <label for="nama4">Nama Anggota 4 :</label>
+                <input type="text" id="nama4" name="nama4" >
+            </div>
+            <div class="form-group">
+                <label for="files">Berkas Anggota</label>
+                <!-- Perbaikan: id harusnya files, bukan file -->
+                <input type="file" name="file" id="files" multiple="multiple" accept=".pdf, .doc, .docx">
+            </div>
             <button type="submit">Kirim</button>
         </form>
-        <div id="status"></div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="upload.js"></script>
     </div>
-  </form>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+         $(document).ready(function() {
+            $('#registrationForm').submit(function(event) {
+                event.preventDefault();
+                var kota = $('#kota').val();
+                var nohp = $('#nohp').val();
+                var fileInput = $('#files');
+               
+                var file = fileInput.prop('files')[0];
+                var fileExtension = file ? file.name.split('.').pop().toLowerCase() : '';
+
+                var errors = [];
+
+                if (kota.trim() === '') {
+                    errors.push('Kota harus diisi.');
+                }
+
+                if (nohp.trim() === '') {
+                    errors.push('No HP harus diisi.');
+                }
+
+                //Validasi apakah file sudah terpilih
+                if (!file) {
+                    errors.push('Anda harus memilih berkas anggota.');
+                } else {
+                    var allowedExtensions = ['pdf', 'doc', 'docx'];
+                    if ($.inArray(fileExtension, allowedExtensions) === -1) {
+                        errors.push('Ekstensi file yang diizinkan adalah hanya PDF, DOC, atau DOCX.');
+                    }
+
+                    if (file.size > 2097152) {
+                        errors.push('Ukuran file tidak boleh lebih dari 2 MB');
+                    }
+                }
+                if (errors.length > 0) {
+                    alert(errors.join('\n'));
+                } else {
+                    this.submit();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
